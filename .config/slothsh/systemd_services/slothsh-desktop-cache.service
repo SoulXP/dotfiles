@@ -1,0 +1,10 @@
+[Unit]
+Description=Initializes user slothsh's desktop environment
+
+[Service]
+Environment="CACHE_DIR=%h/.cache"
+WorkingDirectory=/home/slothsh/.config/slothsh
+ExecStart=/home/slothsh/.config/slothsh/get_current_weather_request.nu
+
+[Install]
+WantedBy=default.target

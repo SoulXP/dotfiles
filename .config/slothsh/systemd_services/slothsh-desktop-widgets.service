@@ -1,0 +1,13 @@
+[Unit]
+Description=Initializes user slothsh's desktop widgets daemon
+BindsTo=/usr/lib/systemd/system/greetd.service
+After=/usr/lib/systemd/system/greetd.service
+
+[Service]
+Type=simple
+Environment="CACHE_DIR=%h/.cache"
+ExecStart=/usr/bin/eww --no-daemonize daemon
+ExecStartPost=/home/slothsh/.config/slothsh/init_desktop_widgets.nu
+
+[Install]
+WantedBy=default.target

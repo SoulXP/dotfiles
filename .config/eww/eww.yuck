@@ -1,0 +1,153 @@
+;; Global Constants
+;; -----------------------------------------------------------------------------
+
+;; Global Variables
+;; -----------------------------------------------------------------------------
+(defpoll current_time
+  :interval "1s"
+  :run-while true
+  `/home/slothsh/.config/slothsh/get_current_time.nu "%H:%M"`)
+(defpoll current_date
+  :interval "1m"
+  :run-while true
+  `/home/slothsh/.config/slothsh/get_current_time.nu "%A, %B %d"`)
+(defpoll current_temperature
+  :interval "30m"
+  :initial "0"
+  :run-while true
+  `/home/slothsh/.config/slothsh/get_current_weather_cached.nu`)
+(defpoll current_application
+  :interval "50ms"
+  :initial "slothsh"
+  :run-while true
+  `/home/slothsh/.config/slothsh/get_current_application.nu`)
+(deflisten workspace_layout
+  :initial ""
+  "tail -F /home/slothsh/.cache/workspaces"
+  )
+
+;; System Bar Windows
+;; -----------------------------------------------------------------------------
+
+(defwindow system_bar_left_window
+  :monitor 1
+  :stacking "bg"
+  :windowtype "dock"
+  :wm-ignore true
+  :geometry (geometry
+             :x "8px"
+             :y "0px"
+             :width "0"
+             :height "40px"
+             :anchor "top left")
+  (system_bar_left_widget))
+
+(defwindow system_bar_right_window
+  :monitor 1
+  :stacking "bg"
+  :windowtype "dock"
+  :wm-ignore true
+  :geometry (geometry
+             :x "8px"
+             :y "0px"
+             :width "0"
+             :height "40px"
+             :anchor "top right")
+  (system_bar_right_widget))
+
+;; System Bar Widgets
+;; -----------------------------------------------------------------------------
+
+(defwidget system_bar_left_widget []
+  (box
+    :orientation "horizontal"
+    :spacing 8
+    :space-evenly false
+    (box
+      :orientation "horizontal"
+      :spacing 8
+      :space-evenly false
+      :class "system-bar-workspace-widget"
+      (label
+        :class {current_application.id < 6 ? "system-bar-workspace-label-primary" : "system-bar-workspace-label-secondary"}
+        :text {current_application.id}
+      )
+      (for entry in {workspace_layout.all}
+        (eventbox
+          :onclick "/home/slothsh/.config/slothsh/switch_workspace.nu ${entry.id}"
+          :width 8
+          (box
+            :class {entry.active ? entry.focus
+                                     ? entry.monitor == "DVI-D-1"
+                                         ? "system-bar-workspace-button-focused-primary"
+                                         : "system-bar-workspace-button-focused-secondary"
+                                     : entry.monitor == "DVI-D-1"
+                                         ? "system-bar-workspace-button-active-primary"
+                                         : "system-bar-workspace-button-active-secondary"
+                                  : "system-bar-workspace-button-inactive"}
+            )
+          )
+        )
+      )
+    (system_bar_application_widget)
+  )
+)
+
+(defwidget system_bar_right_widget []
+  (box
+    :class "system-bar-container default-font"
+    :orientation "horizontal"
+    :spacing 8
+    :space-evenly false
+    (system_bar_date_widget)
+    (system_bar_power_widget)
+  )
+)
+
+(defwidget system_bar_date_widget []
+  (box
+    :class "system-bar-container default-font"
+    :orientation "horizontal"
+    :halign "center"
+    (box
+      :class "system-bar-date-widget"
+      :spacing 20
+      :space-evenly false
+      (label :text "${current_temperature}°C")
+      (label :text current_date)
+      (label :text current_time)
+      )
+    )
+  )
+
+(defwidget system_bar_application_widget []
+  (eventbox
+    :class "system-bar-container default-font"
+    :halign "center"
+    :dragtype "text"
+    :dragvalue {current_application.active}
+    :onmiddleclick "/home/slothsh/.config/slothsh/kill_current_application.nu"
+    (box
+      :class "system-bar-application-widget"
+      :spacing 20
+      (label :text {current_application.active}
+             :limit-width 32)
+      )
+    )
+  )
+
+(defwidget system_bar_power_widget []
+  (eventbox
+    :class "system-bar-container default-font"
+    :halign "center"
+    :onclick "/home/slothsh/.config/slothsh/powerdown.nu 1"
+    :onrightclick "/home/slothsh/.config/slothsh/powerdown.nu 2"
+    (box
+      :class "system-bar-power-widget"
+      :spacing 20
+      :width 32
+      (image :path "/home/slothsh/.config/slothsh/images/power.png"
+             :image-height 18)
+      )
+    )
+  )

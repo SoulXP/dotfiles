@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer for checking & caching data for user slothsh's desktop environment
+
+[Timer]
+OnUnitActiveSec=60s
+OnBootSec=60s
+Unit=slothsh-desktop-cache.service
+
+[Install]
+WantedBy=timers.target

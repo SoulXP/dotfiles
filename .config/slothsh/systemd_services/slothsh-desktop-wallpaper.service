@@ -1,0 +1,13 @@
+[Unit]
+Description=Initializes user slothsh's Wallpaper daemon
+BindsTo=/usr/lib/systemd/system/greetd.service
+After=/usr/lib/systemd/system/greetd.service
+
+[Service]
+Type=forking
+Environment="CACHE_DIR=%h/.cache"
+ExecStart=/usr/bin/swww init
+ExecStartPost=/home/slothsh/.config/slothsh/init_desktop_wallpaper.nu
+
+[Install]
+WantedBy=default.target

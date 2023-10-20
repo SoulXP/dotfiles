@@ -1,0 +1,9 @@
+[Unit]
+Description=Initializes ydotool for passing keys to applications
+
+[Service]
+ExecStart=/usr/bin/ydotoold
+ExecStartPost=/usr/bin/bash -c 'chmod a+w /tmp/.ydotool_socket'
+
+[Install]
+WantedBy=default.target

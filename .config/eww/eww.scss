@@ -1,0 +1,98 @@
+$color1: #cecece;
+$color2: #23252E;
+$color3: #424244;
+$color4: #4775B4;
+$color5: #A9525B;
+$color6: #243865;
+$color7: #5b2427;
+$color8: #2288aa;
+$color9: #054466;
+
+@mixin default_font($weight: normal) {
+	$font: JetBrainsMonoNerdFont;
+	font-family: $font;
+	font-weight: $weight;
+	font-size: 1em;
+}
+
+.bold-font {
+	@include default_font($weight: bold);
+}
+
+.bolder-font {
+	@include default_font($weight: bolder);
+}
+
+.system_bar_left_window,
+.system_bar_right_window {
+	background-color: transparent;
+}
+
+.system-bar-container {
+	@include default_font($weight: bold);
+	background-color: transparent;
+}
+
+.system-bar-workspace-container {
+	margin: 8px 0px 0px 0px;
+}
+
+.system-bar-workspace-button-inactive,
+.system-bar-workspace-button-focused-primary,
+.system-bar-workspace-button-focused-secondary,
+.system-bar-workspace-button-active-primary,
+.system-bar-workspace-button-active-secondary {
+	margin: 11px 0 11px 0;
+	border-radius: 8px;
+}
+
+.system-bar-workspace-button-inactive {
+	background-color: $color3;
+}
+
+.system-bar-workspace-button-active-primary {
+	background-color: $color6;
+}
+
+.system-bar-workspace-button-active-secondary {
+	background-color: $color9;
+}
+
+.system-bar-workspace-button-focused-primary {
+	background-color: $color4;
+}
+
+.system-bar-workspace-button-focused-secondary {
+	background-color: $color8;
+}
+
+.system-bar-power-widget,
+.system-bar-workspace-widget,
+.system-bar-date-widget,
+.system-bar-application-widget {
+	padding: 0px 16px 0px 16px;
+	margin: 8px 0px 0px 0px;
+	color: $color1;
+	background-color: $color2;
+	border: 1px solid $color3;
+	border-radius: 4px;
+}
+
+.system-bar-power-widget {
+	padding: 0px 4px 0px 4px;
+}
+
+.system-bar-workspace-label {
+	padding-right: 8px;
+	font-size: 0.8em;
+}
+
+.system-bar-workspace-label-primary {
+	@extend .system-bar-workspace-label;
+	color: $color4;
+}
+
+.system-bar-workspace-label-secondary {
+	@extend .system-bar-workspace-label;
+	color: $color8;
+}
