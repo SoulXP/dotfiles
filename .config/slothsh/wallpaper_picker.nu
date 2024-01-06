@@ -15,15 +15,15 @@ def get_random_type [] {
     ]
 
     let end_range = ($transition_options | length) - 1
-    ($transition_options | get (random integer 0..$end_range))
+    ($transition_options | get (random int 0..$end_range))
 }
 
 def main [] {
     let wallpapers = (fd -a . $env.SLSH_WALLPAPERS_FOLDER)
     let dir = $"/home/slothsh/.config/rofi/launchers/type-4"
 
-    let position_x = (random integer 0..1920)
-    let position_y = (random integer 0..1080)
+    let position_x = (random int 0..1920)
+    let position_y = (random int 0..1080)
     let message = "<b>Select an image to set as new wallpaper...</b>"
 
     let options_table = (fd . $env.SLSH_WALLPAPERS_FOLDER

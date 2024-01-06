@@ -9,7 +9,7 @@ $color8: #2288aa;
 $color9: #054466;
 
 @mixin default_font($weight: normal) {
-	$font: JetBrainsMonoNerdFont;
+	$font: SFPro;
 	font-family: $font;
 	font-weight: $weight;
 	font-size: 1em;
@@ -66,10 +66,15 @@ $color9: #054466;
 	background-color: $color8;
 }
 
+.system-bar-application-widget {
+	letter-spacing: 1px;
+}
+
 .system-bar-power-widget,
 .system-bar-workspace-widget,
 .system-bar-date-widget,
-.system-bar-application-widget {
+.system-bar-application-widget,
+.system-bar-open-applications-widget {
 	padding: 0px 16px 0px 16px;
 	margin: 8px 0px 0px 0px;
 	color: $color1;

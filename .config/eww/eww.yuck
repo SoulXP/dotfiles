@@ -25,6 +25,10 @@
   :initial ""
   "tail -F /home/slothsh/.cache/workspaces"
   )
+(deflisten application_layout
+  :initial ""
+  "tail -F /home/slothsh/.cache/openapps"
+  )
 
 ;; System Bar Windows
 ;; -----------------------------------------------------------------------------
@@ -68,10 +72,6 @@
       :spacing 8
       :space-evenly false
       :class "system-bar-workspace-widget"
-      (label
-        :class {current_application.id < 6 ? "system-bar-workspace-label-primary" : "system-bar-workspace-label-secondary"}
-        :text {current_application.id}
-      )
       (for entry in {workspace_layout.all}
         (eventbox
           :onclick "/home/slothsh/.config/slothsh/switch_workspace.nu ${entry.id}"
@@ -90,6 +90,7 @@
         )
       )
     (system_bar_application_widget)
+    ;; (system_bar_open_applications_widget)
   )
 )
 
@@ -135,6 +136,26 @@
       )
     )
   )
+
+(defwidget system_bar_open_applications_widget []
+  (eventbox
+    :class "system-bar-container default-font"
+    :halign "center"
+    :dragtype "text"
+    (box
+      :orientation "horizontal"
+      :spacing 18
+      :space-evenly false
+      :class "system-bar-workspace-widget"
+      (for entry in {application_layout.applications}
+        (eventbox
+          (image :path {entry.icon}
+                 :image-height 18)
+          )
+        )
+      )
+  )
+ )
 
 (defwidget system_bar_power_widget []
   (eventbox
